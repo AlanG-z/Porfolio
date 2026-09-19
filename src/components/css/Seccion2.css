@@ -1,0 +1,35 @@
+.seccion2{
+    padding: 72px 10%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    background-color: #1f1e1e;
+
+}
+.section-title {
+    grid-column: 1 / -1;
+    margin: 0 0 16px;
+    color: #e7a85b;
+}
+.seccion{
+    padding: 24px;
+    border: 1px solid #4a4741;
+    border-radius: 8px;
+}
+
+.titulo{
+    font-size: 30px;
+    color: #f1e8d4;
+}
+.tex-seccion{
+    margin: 0;
+    line-height: 1.6;
+    color: #c9c3b8;
+}
+
+@media (max-width: 760px) {
+    .seccion2 {
+        grid-template-columns: 1fr;
+        padding: 56px 8%;
+    }
+}

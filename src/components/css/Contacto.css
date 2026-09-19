@@ -1,0 +1,133 @@
+.contacto {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.8fr) minmax(280px, 1.2fr);
+    gap: 64px;
+    padding: 80px 10%;
+    background: #36362f;
+    color: #f1e8d4;
+}
+
+.contacto-intro {
+    align-self: center;
+}
+
+.eyebrow {
+    margin: 0 0 12px;
+    color: #e7a85b;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.contacto h2 {
+    margin: 0;
+    max-width: 12ch;
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    line-height: 1.05;
+}
+
+.contacto-intro > p:last-child {
+    max-width: 38ch;
+    color: #d6d0c4;
+    line-height: 1.6;
+}
+
+.contact-socials {
+    margin-top: 34px;
+}
+
+.contact-socials-title {
+    margin: 0 0 14px;
+    color: #f1e8d4;
+    font-size: 0.95rem;
+}
+
+.contact-social-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.contact-social-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #625d52;
+    border-radius: 5px;
+    padding: 9px 12px;
+    color: #d6d0c4;
+    text-decoration: none;
+    transition: border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.contact-social-list a:hover,
+.contact-social-list a:focus-visible {
+    border-color: #8ec7bf;
+    color: #8ec7bf;
+    transform: translateY(-2px);
+}
+
+.contact-social-list svg {
+    width: 19px;
+    height: 19px;
+    fill: currentColor;
+}
+
+.contacto-form {
+    display: grid;
+    gap: 10px;
+    max-width: 560px;
+}
+
+.contacto-form label {
+    margin-top: 8px;
+    color: #f1e8d4;
+    font-size: 0.95rem;
+}
+
+.contacto-form input,
+.contacto-form textarea {
+    width: 100%;
+    border: 1px solid #625d52;
+    border-radius: 4px;
+    padding: 13px 14px;
+    background: #24231f;
+    color: #f1e8d4;
+    font: inherit;
+    resize: vertical;
+}
+
+.contacto-form input:focus,
+.contacto-form textarea:focus {
+    outline: 2px solid #8ec7bf;
+    outline-offset: 2px;
+}
+
+.contacto-form button {
+    width: fit-content;
+    margin-top: 12px;
+    border: 0;
+    border-radius: 4px;
+    padding: 13px 22px;
+    background: #e7a85b;
+    color: #191714;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+}
+
+.contacto-form button:hover {
+    background: #f3bd76;
+}
+
+@media (max-width: 700px) {
+    .contacto {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding: 60px 8%;
+    }
+}

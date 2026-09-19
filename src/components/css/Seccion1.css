@@ -1,0 +1,77 @@
+.perfil{
+  min-height: 520px;
+  padding: 80px 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 20px;
+    background: #36362f;
+    color: #f1e8d4;
+}
+
+.perfil img{
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #0c0606;
+    box-shadow: 0 0 20px rgba(12, 7, 7, 0.5);
+}
+
+.info{
+    max-width: 600px;
+}
+
+.Titulo{
+  margin: 0;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+}
+.perfil p{
+  width: min(100%, 600px);
+}
+.role{
+    font-family:'IBM Plex Mono', monospace;
+    color: #e7a85b;
+    font-size:15px;
+    margin-top:22px;
+  }
+
+  .pitch{
+    max-width:52ch;
+    margin-top:22px;
+    color: #d6d0c4;
+    font-size:16.5px;
+  }
+
+  .contact-row{
+    margin-top:36px;
+    display:flex;
+    gap:22px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13.5px;
+  }
+
+  .contact-row a{
+    color: #8ec7bf;
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+  }
+    .contact-row a:hover{ border-bottom-color:#8ec7bf; }
+
+  @media (max-width: 700px) {
+    .perfil {
+      padding: 56px 8%;
+      flex-direction: column-reverse;
+      text-align: center;
+    }
+
+    .perfil img {
+      width: 220px;
+      height: 220px;
+    }
+
+    .contact-row {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
