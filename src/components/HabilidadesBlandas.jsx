@@ -1,4 +1,4 @@
-import '../styles/Seccion5.css'
+import '../styles/Habilidades.css'
 import { habilidadesBlandas } from '../data/formacion'
 import Reveal from './Reveal'
 

@@ -1,4 +1,4 @@
-import '../styles/Seccion3.css'
+import '../styles/Tecnologias.css'
 import { herramientas } from '../data/tecnologias'
 import Reveal from './Reveal'
 

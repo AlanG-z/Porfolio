@@ -1,4 +1,4 @@
-import '../styles/Seccion1.css'
+import '../styles/SobreMi.css'
 import profileImage from '../assets/Perfil.png'
 import Reveal from './Reveal'
 

@@ -1,4 +1,4 @@
-import '../styles/Seccion2.css'
+import '../styles/Proyectos.css'
 import { proyectos } from '../data/proyectos'
 import Reveal from './Reveal'
 
