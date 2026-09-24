@@ -15,7 +15,7 @@ function SobreMi() {
                 <div className="hero-actions">
                     <a
                         className="cv-download"
-                        href="/Alan-Gutierrez-CV.pdf"
+                        href="/Alan_Gutierrez_CV.pdf"
                         download="Alan-Gutierrez-CV.pdf"
                     >
                         <svg viewBox="0 0 24 24" aria-hidden="true">
