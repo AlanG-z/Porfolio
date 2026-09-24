@@ -1,6 +1,7 @@
 .tecno-logo{
     padding: 64px 10%;
-    background-color: #2a2925;
+    background-color: var(--bg-tech);
+    color: var(--text-main);
     display: grid;
     grid-template-columns: minmax(180px, 0.6fr) 1.4fr;
     gap: 48px;
@@ -9,7 +10,7 @@
 
 .technology-heading p:last-child {
     max-width: 26ch;
-    color: #d6d0c4;
+    color: var(--text-soft);
     line-height: 1.5;
 }
 
@@ -26,17 +27,18 @@
     align-items: center;
     justify-content: center;
     gap: 12px;
-    border: 1px solid #4a4741;
+    border: 1px solid var(--border);
     border-radius: 8px;
-    background: #24231f;
-    color: #f1e8d4;
+    background: var(--bg-card);
+    color: var(--text-main);
     text-align: center;
-    transition: transform 180ms ease, border-color 180ms ease;
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .technology-card:hover {
-    transform: translateY(-4px);
-    border-color: #e7a85b;
+    transform: translateY(-6px) scale(1.03) rotate(-0.5deg);
+    border-color: var(--accent);
+    box-shadow: 0 12px 24px var(--shadow);
 }
 
 .technology-card img {
@@ -51,7 +53,7 @@
 
 .section-head {
     font-family:'Fraunces', serif;
-    color: #f1e8d4;
+    color: var(--text-main);
     font-size: 2rem;
     font-weight:500;
     margin: 0;
@@ -59,7 +61,7 @@
 
 .eyebrow {
     margin: 0 0 10px;
-    color: #e7a85b;
+    color: var(--accent);
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.85rem;
     letter-spacing: 0.08em;

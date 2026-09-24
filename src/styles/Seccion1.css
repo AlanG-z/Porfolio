@@ -5,8 +5,8 @@
     align-items: center;
     justify-content: space-around;
     gap: 20px;
-    background: #36362f;
-    color: #f1e8d4;
+    background: var(--bg-hero);
+    color: var(--text-main);
 }
 
 .perfil img{
@@ -14,8 +14,8 @@
     height: 300px;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid #0c0606;
-    box-shadow: 0 0 20px rgba(12, 7, 7, 0.5);
+    border: 4px solid var(--accent);
+    box-shadow: 0 0 28px var(--shadow);
 }
 
 .info{
@@ -31,7 +31,7 @@
 }
 .role{
     font-family:'IBM Plex Mono', monospace;
-    color: #e7a85b;
+    color: var(--accent);
     font-size:15px;
     margin-top:22px;
   }
@@ -39,7 +39,7 @@
   .pitch{
     max-width:52ch;
     margin-top:22px;
-    color: #d6d0c4;
+    color: var(--text-soft);
     font-size:16.5px;
   }
 
@@ -52,11 +52,12 @@
   }
 
   .contact-row a{
-    color: #8ec7bf;
+    color: var(--accent-2);
     text-decoration:none;
     border-bottom:1px solid transparent;
+    transition: border-color 180ms ease, color 180ms ease, transform 180ms ease;
   }
-    .contact-row a:hover{ border-bottom-color:#8ec7bf; }
+    .contact-row a:hover{ border-bottom-color: var(--accent-2); transform: translateY(-1px); }
 
   @media (max-width: 700px) {
     .perfil {

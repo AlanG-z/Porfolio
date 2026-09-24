@@ -1,0 +1,85 @@
+/* ===== Efectos globales ===== */
+
+/* Aparición por scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Flotación suave para la foto de perfil */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.perfil img {
+  animation: floaty 5s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.perfil img:hover {
+  transform: scale(1.04) rotate(1deg);
+}
+
+/* Títulos con entrada */
+.Titulo,
+.section-title,
+.section-head,
+.formacion-title,
+.contacto h2 {
+  animation: fadeSlideIn 0.8s ease both;
+}
+
+/* Transición suave al cambiar de tema */
+.app,
+.div-header,
+.perfil,
+.seccion2,
+.tecno-logo,
+.educacion,
+.habilidades-blandas,
+.contacto,
+.Footer {
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+}

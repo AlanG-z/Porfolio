@@ -1,0 +1,319 @@
+.contacto {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.8fr) minmax(280px, 1.2fr);
+    gap: 64px;
+    padding: 80px 10%;
+    background: var(--bg-contact);
+    color: var(--text-main);
+}
+
+.contacto-simple {
+    position: relative;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    padding: 110px 8% 90px;
+    overflow: hidden;
+    isolation: isolate;
+    background:
+        radial-gradient(600px 300px at 50% 0%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%),
+        var(--bg-contact);
+}
+
+.contacto-glow {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(1px 1px at 20% 30%, var(--border-soft), transparent),
+        radial-gradient(1px 1px at 80% 20%, var(--border-soft), transparent),
+        radial-gradient(1px 1px at 70% 70%, var(--border-soft), transparent);
+    opacity: 0.6;
+}
+
+.contacto-simple .contacto-intro {
+    max-width: 720px;
+    width: 100%;
+    display: grid;
+    justify-items: center;
+}
+
+.contacto-simple .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border-soft);
+    background: color-mix(in srgb, var(--bg-card) 80%, transparent);
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    backdrop-filter: blur(6px);
+}
+
+.eyebrow-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #3ddc84;
+    box-shadow: 0 0 0 4px color-mix(in srgb, #3ddc84 25%, transparent);
+    animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+    50% { box-shadow: 0 0 0 7px color-mix(in srgb, #3ddc84 12%, transparent); }
+}
+
+.contacto-simple h2 {
+    max-width: 16ch;
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+    margin-top: 18px;
+}
+
+.contact-sub {
+    margin: 14px 0 0;
+    font-size: 1.05rem;
+    color: var(--text-soft);
+}
+
+.email-copy {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: min(100%, 620px);
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
+    padding: 10px 10px 10px 12px;
+    background: color-mix(in srgb, var(--bg-card) 92%, transparent);
+    box-shadow: 0 18px 40px var(--shadow);
+    backdrop-filter: blur(8px);
+    transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.email-copy:hover,
+.email-copy:focus-within {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 22px 48px var(--shadow);
+}
+
+.email-copy.is-copied {
+    border-color: #3ddc84;
+}
+
+.email-copy-avatar {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    color: #191714;
+}
+
+:root[data-theme="light"] .email-copy-avatar {
+    color: #fff;
+}
+
+.email-copy-avatar svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+}
+
+.email-copy-text {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    color: var(--text-main);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.email-copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    flex-shrink: 0;
+    border: 0;
+    border-radius: 10px;
+    padding: 11px 16px;
+    background: var(--accent);
+    color: #191714;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.email-copy-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+:root[data-theme="light"] .email-copy-btn {
+    color: #fff;
+}
+
+.email-copy-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+}
+
+.email-copy-btn:active {
+    transform: scale(0.97);
+}
+
+.is-copied .email-copy-btn {
+    background: #3ddc84;
+    color: #0c2317;
+}
+
+.email-copy-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 14px 0 0;
+    font-size: 0.9rem;
+    color: var(--text-soft);
+}
+
+.hint-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border-soft);
+}
+
+.hint-dot.ok {
+    background: #3ddc84;
+}
+
+.contacto-intro {
+    align-self: center;
+}
+
+.eyebrow {
+    margin: 0 0 12px;
+    color: var(--accent);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.contacto h2 {
+    margin: 0;
+    max-width: 50ch;
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    line-height: 1.05;
+}
+
+.contacto-intro > p:last-child {
+    max-width: 38ch;
+    color: var(--text-soft);
+    line-height: 1.6;
+}
+
+.contact-socials {
+    margin-top: 40px;
+    display: grid;
+    justify-items: center;
+    gap: 14px;
+}
+
+.contact-socials-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    color: var(--text-soft);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.contact-socials-title::before,
+.contact-socials-title::after {
+    content: "";
+    width: 36px;
+    height: 1px;
+    background: var(--border-soft);
+}
+
+.contact-social-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.contact-social-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    padding: 11px 18px;
+    color: var(--text-soft);
+    background: var(--bg-card);
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color 180ms ease, color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.contact-social-list a:hover,
+.contact-social-list a:focus-visible {
+    border-color: var(--accent);
+    color: var(--text-main);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px var(--shadow);
+}
+
+.contact-social-list svg {
+    width: 19px;
+    height: 19px;
+    fill: currentColor;
+}
+
+@media (max-width: 700px) {
+    .contacto {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding: 60px 8%;
+    }
+
+    .contacto-simple {
+        padding: 80px 6% 70px;
+    }
+
+    .email-copy {
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+        padding: 14px;
+    }
+
+    .email-copy-text {
+        flex-basis: 100%;
+        text-align: center;
+        white-space: normal;
+    }
+
+    .email-copy-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 .app {
-    min-height: 100vh;
-    background: #141313;
-    color: #f4f0e8;
+  min-height: 100vh;
+  background: var(--bg-hero);
+  color: var(--text-main);
+  transition: background-color 0.35s ease, color 0.35s ease;
 }

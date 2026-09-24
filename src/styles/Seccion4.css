@@ -1,0 +1,135 @@
+.educacion {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.75fr) minmax(0, 1.25fr);
+  gap: 64px;
+  padding: 76px 10%;
+  background: var(--bg-section);
+  color: var(--text-main);
+}
+
+.formacion-intro {
+  max-width: 360px;
+}
+
+.formacion-eyebrow {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.formacion-title {
+  margin: 0;
+  color: var(--text-main);
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+.formacion-intro > p:last-child {
+  margin: 18px 0 0;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
+.education-timeline {
+  position: relative;
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.education-timeline::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 11px;
+  width: 1px;
+  background: var(--border-soft);
+}
+
+.education-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 16px;
+  padding: 20px 22px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-card);
+  transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+}
+
+.education-item:hover {
+  border-color: var(--accent);
+  box-shadow: 0 12px 26px var(--shadow);
+  transform: translateX(4px);
+}
+
+.education-marker {
+  position: relative;
+  z-index: 1;
+  width: 23px;
+  height: 23px;
+  margin-top: 2px;
+  border: 5px solid var(--bg-card);
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.education-period {
+  color: var(--accent);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+}
+
+.education-content h3 {
+  margin: 8px 0 6px;
+  color: var(--text-main);
+  font-size: 1.18rem;
+  line-height: 1.25;
+}
+
+.education-content p {
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+@media (max-width: 760px) {
+  .educacion {
+    grid-template-columns: 1fr;
+    gap: 34px;
+    padding: 58px 8%;
+  }
+
+  .formacion-intro {
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 460px) {
+  .education-item {
+    grid-template-columns: 20px minmax(0, 1fr);
+    gap: 11px;
+    padding: 17px 15px;
+  }
+
+  .education-timeline::before {
+    left: 9px;
+  }
+
+  .education-marker {
+    width: 19px;
+    height: 19px;
+    border-width: 4px;
+  }
+}
