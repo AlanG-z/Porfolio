@@ -1,13 +1,15 @@
 .educacion {
+  width: 100%;
   display: grid;
   grid-template-columns: minmax(210px, 0.75fr) minmax(0, 1.25fr);
-  gap: 64px;
-  padding: 76px 10%;
+  gap: clamp(36px, 6vw, 72px);
+  padding: clamp(58px, 7vw, 86px) 10%;
   background: var(--bg-section);
   color: var(--text-main);
 }
 
 .formacion-intro {
+  min-width: 0;
   max-width: 360px;
 }
 
@@ -56,6 +58,7 @@
 
 .education-item {
   position: relative;
+  min-width: 0;
   display: grid;
   grid-template-columns: 24px minmax(0, 1fr);
   gap: 16px;
@@ -89,6 +92,11 @@
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.75rem;
   letter-spacing: 0.03em;
+}
+
+.education-content {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .education-content h3 {
@@ -131,5 +139,15 @@
     width: 19px;
     height: 19px;
     border-width: 4px;
+  }
+}
+
+@media (max-width: 380px) {
+  .educacion {
+    padding-inline: 20px;
+  }
+
+  .formacion-title {
+    font-size: clamp(1.85rem, 9vw, 2.2rem);
   }
 }

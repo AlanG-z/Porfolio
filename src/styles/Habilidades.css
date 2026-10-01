@@ -1,8 +1,9 @@
 .habilidades-blandas {
+  width: 100%;
   display: grid;
   grid-template-columns: minmax(210px, 0.75fr) minmax(0, 1.25fr);
-  gap: 64px;
-  padding: 76px 10%;
+  gap: clamp(36px, 6vw, 72px);
+  padding: clamp(58px, 7vw, 86px) 10%;
   background: var(--bg-tech);
   color: var(--text-main);
 }
@@ -21,6 +22,7 @@
 }
 
 .soft-skill-card {
+  min-width: 0;
   min-height: 92px;
   display: flex;
   align-items: center;

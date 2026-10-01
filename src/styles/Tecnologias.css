@@ -1,11 +1,16 @@
-.tecno-logo{
-    padding: 64px 10%;
+.tecno-logo {
+    width: 100%;
+    padding: clamp(52px, 7vw, 76px) 10%;
     background-color: var(--bg-tech);
     color: var(--text-main);
     display: grid;
-    grid-template-columns: minmax(180px, 0.6fr) 1.4fr;
-    gap: 48px;
+    grid-template-columns: minmax(180px, 0.6fr) minmax(0, 1.4fr);
+    gap: clamp(32px, 4vw, 56px);
     align-items: center;
+}
+
+.technology-heading {
+    min-width: 0;
 }
 
 .technology-heading p:last-child {
@@ -21,6 +26,7 @@
 }
 
 .technology-card {
+    min-width: 0;
     display: flex;
     min-height: 126px;
     flex-direction: column;
@@ -48,7 +54,10 @@
 }
 
 .technology-card span {
+    max-width: 100%;
     font-size: 0.9rem;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
 }
 
 .section-head {
@@ -68,13 +77,36 @@
     text-transform: uppercase;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 820px) {
     .tecno-logo {
         grid-template-columns: 1fr;
-        padding: 52px 8%;
+        gap: 34px;
+    }
+}
+
+@media (max-width: 600px) {
+    .tecno-logo {
+        padding: 52px clamp(20px, 8vw, 48px);
     }
 
     .technology-grid {
-        grid-template-columns: repeat(2, minmax(110px, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 380px) {
+    .technology-card {
+        min-height: 110px;
+        gap: 9px;
+        padding: 12px 8px;
+    }
+
+    .technology-card img {
+        width: 46px;
+        height: 46px;
+    }
+
+    .technology-card span {
+        font-size: 0.82rem;
     }
 }

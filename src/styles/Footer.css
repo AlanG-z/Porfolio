@@ -1,21 +1,23 @@
 .Footer {
-    display: grid;
-
-    align-items:baseline;
-    gap: 30px;
+    width: 100%;
     min-height: 25px;
-    padding: 20px 10%;
+    padding: 20px 6%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: var(--bg-footer);
     color: var(--text-soft);
+    text-align: center;
 }
-.footer-brand{
-    display: flex;
-    align-items:last baseline;
-    justify-content:center;
+
+.footer-brand {
+    min-width: 0;
 }
 .footer-brand p {
+    margin: 0;
     color: var(--text-main);
-    font-size: 1.1rem;
+    font-size: clamp(0.82rem, 1.4vw, 1.1rem);
+    line-height: 1.5;
 }
 
 :root[data-theme="light"] .Footer,

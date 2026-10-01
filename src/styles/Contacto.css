@@ -9,10 +9,11 @@
 
 .contacto-simple {
     position: relative;
+    width: 100%;
     grid-template-columns: 1fr;
     justify-items: center;
     text-align: center;
-    padding: 110px 8% 90px;
+    padding: clamp(78px, 9vw, 120px) 8% clamp(68px, 8vw, 96px);
     overflow: hidden;
     isolation: isolate;
     background:
@@ -32,6 +33,7 @@
 }
 
 .contacto-simple .contacto-intro {
+    min-width: 0;
     max-width: 720px;
     width: 100%;
     display: grid;
@@ -296,24 +298,67 @@
     }
 
     .contacto-simple {
-        padding: 80px 6% 70px;
+        padding: 72px 5% 64px;
     }
 
     .email-copy {
-        flex-wrap: wrap;
-        justify-content: center;
-        text-align: center;
-        padding: 14px;
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr);
+        justify-content: stretch;
+        gap: 10px 12px;
+        padding: 12px;
     }
 
     .email-copy-text {
-        flex-basis: 100%;
-        text-align: center;
+        grid-column: 2;
+        text-align: left;
         white-space: normal;
+        overflow-wrap: anywhere;
     }
 
     .email-copy-btn {
+        grid-column: 1 / -1;
         width: 100%;
         justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .contacto-simple {
+        padding: 64px 16px 58px;
+    }
+
+    .contacto-simple h2 {
+        font-size: clamp(2rem, 10vw, 2.65rem);
+    }
+
+    .contact-sub {
+        font-size: 0.98rem;
+    }
+
+    .email-copy {
+        gap: 10px;
+    }
+
+    .contact-socials-title {
+        gap: 8px;
+        font-size: 0.72rem;
+    }
+
+    .contact-socials-title::before,
+    .contact-socials-title::after {
+        width: 20px;
+    }
+
+    .contact-social-list {
+        width: 100%;
+        gap: 10px;
+    }
+
+    .contact-social-list a {
+        min-width: 0;
+        flex: 1 1 130px;
+        justify-content: center;
+        padding: 11px 12px;
     }
 }

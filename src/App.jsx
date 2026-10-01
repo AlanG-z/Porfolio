@@ -15,6 +15,8 @@ function App() {
   const { theme, toggle } = useTheme()
 
   return (
+    <main>
+
       <div className="app">
 
         <Header theme={theme} onToggleTheme={toggle} />
@@ -27,6 +29,7 @@ function App() {
         <Footer />
         <PortfolioBot />
       </div>
+    </main>
   )
 }
 

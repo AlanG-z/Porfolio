@@ -3,6 +3,8 @@ import ThemeToggle from './ThemeToggle'
 
 function Header({ theme = 'dark', onToggleTheme }) {
     return (
+        <header>
+
             <nav className="div-header" aria-label="Navegación principal">
                 <div className='logo'><p>{'</>'}Alan</p></div>
                 <ul className="Header">
@@ -18,6 +20,7 @@ function Header({ theme = 'dark', onToggleTheme }) {
                 </div>
             </nav>
         
+        </header>
     );
 }
 

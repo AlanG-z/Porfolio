@@ -7,7 +7,7 @@ function SobreMi() {
         <Reveal as="section" className="perfil" id="inicio">
             <div className="info">
                 <h1 className='Titulo'>Alan Gutierrez</h1>
-                <div className="role">Desarrollador · React / frontend</div>
+                <div className="role">Software Engineer · React / frontend</div>
                 <p className="pitch">Construyo y mantengo aplicaciones web, desde dashboards internos
                     hasta migraciones de infraestructura completas. Me interesa el
                     detalle de cómo se arma algo, no solo que funcione.</p>
