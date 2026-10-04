@@ -73,15 +73,3 @@
     font-size: 0.75rem;
     font-weight: 700;
 }
-
-@media (max-width: 900px) {
-    .Footer {
-        grid-template-columns: 1fr;
-        justify-items: center;
-        text-align: center;
-    }
-
-    .social-links {
-        justify-content: center;
-    }
-}

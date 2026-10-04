@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useLayoutEffect, useState } from 'react'
 
 const STORAGE_KEY = 'portfolio-theme'
 
@@ -13,7 +13,9 @@ function getInitialTheme() {
 export function useTheme() {
   const [theme, setTheme] = useState(getInitialTheme)
 
-  useEffect(() => {
+  // useLayoutEffect evita el flash: el atributo se aplica antes del primer pintado,
+  // así el CSS y la etiqueta del toggle nunca discrepan.
+  useLayoutEffect(() => {
     document.documentElement.dataset.theme = theme
     localStorage.setItem(STORAGE_KEY, theme)
   }, [theme])

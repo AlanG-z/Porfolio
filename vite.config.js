@@ -1,6 +1,5 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
 
 // El bot local usa una API compatible con OpenAI (por ejemplo, llama.cpp).
 // El proxy mantiene la clave fuera del bundle y permite llamar a /v1 desde el navegador.
@@ -22,7 +21,7 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
-    plugins: [react(), tailwindcss()],
+    plugins: [react()],
     server: {
       proxy: { '/v1': llmProxy },
     },

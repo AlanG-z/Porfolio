@@ -1,5 +1,5 @@
 import '../styles/SobreMi.css'
-import profileImage from '../assets/Perfil.png'
+import profileImage from '../assets/Perfil.webp'
 import Reveal from './Reveal'
 
 function SobreMi() {
@@ -34,8 +34,8 @@ function SobreMi() {
                     <img
                         src={profileImage}
                         alt="Retrato de Alan Gutierrez"
-                        width="1086"
-                        height="1448"
+                        width="1000"
+                        height="1333"
                     />
                 </div>
                 <span className="profile-portrait__code" aria-hidden="true">

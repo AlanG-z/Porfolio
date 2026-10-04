@@ -1,20 +1,22 @@
+/* ===== Habilidades blandas (mobile-first) ===== */
+
 .habilidades-blandas {
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(210px, 0.75fr) minmax(0, 1.25fr);
-  gap: clamp(36px, 6vw, 72px);
-  padding: clamp(58px, 7vw, 86px) 10%;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 34px;
+  padding: 58px 20px;
   background: var(--bg-tech);
   color: var(--text-main);
 }
 
 .habilidades-blandas .formacion-intro {
-  max-width: 360px;
+  max-width: 520px;
 }
 
 .soft-skills-list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 14px;
   margin: 0;
   padding: 0;
@@ -58,24 +60,26 @@
   font-weight: 800;
 }
 
-:root[data-theme="light"] .soft-skill-check {
+:root[data-theme='light'] .soft-skill-check {
   color: #fff;
 }
 
-@media (max-width: 760px) {
-  .habilidades-blandas {
-    grid-template-columns: 1fr;
-    gap: 34px;
-    padding: 58px 8%;
-  }
-
-  .habilidades-blandas .formacion-intro {
-    max-width: 520px;
+@media (min-width: 461px) {
+  .soft-skills-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 460px) {
-  .soft-skills-list {
-    grid-template-columns: 1fr;
+@media (min-width: 761px) {
+  .habilidades-blandas {
+    grid-template-columns: minmax(210px, 0.75fr) minmax(0, 1.25fr);
+    gap: clamp(36px, 6vw, 72px);
+    padding: clamp(58px, 7vw, 86px) 10%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .habilidades-blandas .formacion-intro {
+    max-width: 360px;
   }
 }

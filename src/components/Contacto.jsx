@@ -47,13 +47,13 @@ function Contacto() {
                     <ul className="contact-social-list">
         
                         <li>
-                            <a href="https://www.linkedin.com/in/alan-gutierrez-dev" target="_blank" rel="noreferrer" aria-label="Visitar mi perfil de LinkedIn">
+                            <a href="https://www.linkedin.com/in/alan-gutierrez-dev" target="_blank" rel="noopener noreferrer" aria-label="Visitar mi perfil de LinkedIn (se abre en una pestaña nueva)">
                                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.7 3.4A2.4 2.4 0 1 1 0 3.4a2.4 2.4 0 0 1 4.7 0ZM.3 8h4.4v14H.3V8Zm7.1 0h4.2v1.9h.1c.6-1.1 2-2.3 4.1-2.3 4.4 0 5.2 2.9 5.2 6.7V22h-4.4v-6.8c0-1.6 0-3.7-2.3-3.7s-2.7 1.8-2.7 3.6V22H7.4V8Z" /></svg>
                                 <span>LinkedIn</span>
                             </a>
                         </li>
                         <li>
-                            <a href="https://github.com/" target="_blank" rel="noreferrer" aria-label="Visitar mi perfil de GitHub">
+                            <a href="https://github.com/AlanG-z" target="_blank" rel="noopener noreferrer" aria-label="Visitar mi perfil de GitHub (se abre en una pestaña nueva)">
                                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.8.1-.8.1-.8 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.8 1.4 3.5 1.1.1-.8.4-1.4.8-1.7-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C16.6 5.7 17.6 6 17.6 6c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z" /></svg>
                                 <span>GitHub</span>
                             </a>

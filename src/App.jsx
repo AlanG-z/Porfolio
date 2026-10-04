@@ -15,21 +15,21 @@ function App() {
   const { theme, toggle } = useTheme()
 
   return (
-    <main>
+    <div className="app">
+      <Header theme={theme} onToggleTheme={toggle} />
 
-      <div className="app">
-
-        <Header theme={theme} onToggleTheme={toggle} />
-        <SobreMi/>
-        <Proyectos/>
-        <Tecnologias/>
+      <main id="contenido" tabIndex={-1}>
+        <SobreMi />
+        <Proyectos />
+        <Tecnologias />
         <Educacion />
         <HabilidadesBlandas />
         <Contacto />
-        <Footer />
-        <PortfolioBot />
-      </div>
-    </main>
+      </main>
+
+      <Footer />
+      <PortfolioBot />
+    </div>
   )
 }
 

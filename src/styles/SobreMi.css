@@ -1,13 +1,16 @@
+/* ===== Hero / Sobre mí (mobile-first) ===== */
+
 .perfil {
   position: relative;
   isolation: isolate;
-  min-height: 680px;
-  padding: clamp(72px, 9vw, 120px) clamp(24px, 10vw, 140px);
+  min-height: auto;
+  padding: 48px 16px 64px;
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  grid-template-columns: minmax(0, 1fr);
   align-items: center;
-  gap: clamp(48px, 7vw, 100px);
+  gap: 36px;
   overflow: hidden;
+  text-align: center;
   background: var(--bg-hero);
   color: var(--text-main);
 }
@@ -16,9 +19,9 @@
   content: '';
   position: absolute;
   z-index: -1;
-  top: 50%;
-  right: clamp(-170px, -10vw, -80px);
-  width: min(52vw, 680px);
+  top: 24%;
+  right: 50%;
+  width: min(92vw, 620px);
   aspect-ratio: 1;
   border-radius: 50%;
   background: radial-gradient(
@@ -27,13 +30,14 @@
     color-mix(in srgb, var(--accent-2) 9%, transparent) 44%,
     transparent 72%
   );
-  transform: translateY(-50%);
+  transform: translate(50%, -50%);
   pointer-events: none;
 }
 
 .profile-portrait {
   position: relative;
-  width: min(100%, 460px);
+  order: -1;
+  width: min(100%, 292px);
   aspect-ratio: 1 / 1.08;
   display: grid;
   place-items: center;
@@ -65,7 +69,7 @@
 .profile-portrait__frame {
   position: relative;
   z-index: 1;
-  width: min(78%, 350px);
+  width: min(90%, 300px);
   aspect-ratio: 3 / 4;
   overflow: hidden;
   display: flex;
@@ -109,7 +113,7 @@
   z-index: 2;
   top: 12%;
   right: 3%;
-  width: 54px;
+  width: 48px;
   aspect-ratio: 1;
   display: grid;
   place-items: center;
@@ -138,13 +142,15 @@
 }
 
 .info {
+  width: 100%;
   min-width: 0;
   max-width: 640px;
+  margin-inline: auto;
 }
 
 .Titulo {
   margin: 0;
-  font-size: clamp(2.7rem, 6vw, 5.25rem);
+  font-size: clamp(2.45rem, 13vw, 3.4rem);
   line-height: 0.98;
   letter-spacing: -0.045em;
   text-wrap: balance;
@@ -155,17 +161,17 @@
 }
 
 .role {
-  margin-top: 22px;
+  margin-top: 16px;
   color: var(--accent);
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 15px;
+  font-size: 0.84rem;
 }
 
 .pitch {
   max-width: 54ch;
-  margin-top: 22px;
+  margin: 18px auto 0;
   color: var(--text-soft);
-  font-size: 16.5px;
+  font-size: 1rem;
   line-height: 1.65;
 }
 
@@ -173,21 +179,22 @@
   margin-top: 30px;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 10px;
 }
 
 .cv-download {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 13px 19px;
+  padding: 12px 16px;
   border: 1px solid color-mix(in srgb, var(--accent) 75%, transparent);
   border-radius: 999px;
   background: var(--accent);
   color: #fffaf2;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 13px;
+  font-size: 0.81rem;
   font-weight: 600;
   letter-spacing: 0.01em;
   text-decoration: none;
@@ -220,15 +227,17 @@
 .hero-actions-note {
   color: var(--text-muted);
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 .contact-row {
   margin-top: 36px;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 22px;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 13.5px;
+  font-size: 0.84rem;
 }
 
 .contact-row a {
@@ -243,47 +252,7 @@
   transform: translateY(-1px);
 }
 
-@media (max-width: 900px) {
-  .perfil {
-    min-height: auto;
-    grid-template-columns: minmax(0, 1fr);
-    gap: clamp(42px, 8vw, 64px);
-    padding: 64px clamp(24px, 8vw, 72px) 80px;
-    text-align: center;
-  }
-
-  .perfil::before {
-    top: 24%;
-    right: 50%;
-    width: min(92vw, 620px);
-    transform: translate(50%, -50%);
-  }
-
-  .profile-portrait {
-    order: -1;
-    width: min(90%, 430px);
-  }
-
-  .info {
-    width: 100%;
-    margin-inline: auto;
-  }
-
-  .pitch {
-    margin-inline: auto;
-  }
-
-  .hero-actions {
-    justify-content: center;
-  }
-
-  .contact-row {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 520px) {
+@media (min-width: 381px) {
   .perfil {
     gap: 42px;
     padding: 48px 20px 64px;
@@ -293,43 +262,87 @@
     width: min(100%, 320px);
   }
 
-  .profile-portrait__frame {
-    width: min(90%, 300px);
-  }
-
-  .profile-portrait__code {
-    width: 48px;
-  }
-
-  .Titulo {
-    font-size: clamp(2.45rem, 13vw, 3.4rem);
+  .role {
+    margin-top: 22px;
+    font-size: 0.94rem;
   }
 
   .pitch {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 380px) {
-  .perfil {
-    gap: 36px;
-    padding-inline: 16px;
-  }
-
-  .profile-portrait {
-    width: min(100%, 292px);
-  }
-
-  .role {
-    margin-top: 16px;
-    font-size: 0.84rem;
+    margin-top: 22px;
   }
 
   .hero-actions {
-    gap: 10px;
+    gap: 16px;
   }
 
   .cv-download {
-    padding: 12px 16px;
+    padding: 13px 19px;
+  }
+}
+
+@media (min-width: 521px) {
+  .perfil {
+    gap: clamp(42px, 8vw, 64px);
+    padding: 64px clamp(24px, 8vw, 72px) 80px;
+  }
+
+  .profile-portrait {
+    width: min(90%, 430px);
+  }
+
+  .profile-portrait__frame {
+    width: min(78%, 350px);
+  }
+
+  .profile-portrait__code {
+    width: 54px;
+  }
+
+  .pitch {
+    font-size: 1.03rem;
+  }
+}
+
+@media (min-width: 901px) {
+  .perfil {
+    min-height: 680px;
+    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+    gap: clamp(48px, 7vw, 100px);
+    padding: clamp(72px, 9vw, 120px) clamp(24px, 10vw, 140px);
+    text-align: left;
+  }
+
+  .perfil::before {
+    top: 50%;
+    right: clamp(-170px, -10vw, -80px);
+    width: min(52vw, 680px);
+    transform: translateY(-50%);
+  }
+
+  .profile-portrait {
+    order: 0;
+    width: min(100%, 460px);
+  }
+
+  .info {
+    width: auto;
+    margin-inline: 0;
+  }
+
+  .Titulo {
+    font-size: clamp(2.7rem, 6vw, 5.25rem);
+  }
+
+  .pitch {
+    margin-left: 0;
+  }
+
+  .hero-actions {
+    justify-content: flex-start;
+  }
+
+  .contact-row {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
   }
 }

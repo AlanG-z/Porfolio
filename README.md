@@ -1,25 +1,58 @@
-# React + Vite
+# Portafolio — Alan Gutierrez
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Portafolio personal de una página (SPA) construido con React y Vite. Presenta el perfil,
+los proyectos destacados, el stack de herramientas, la formación, las habilidades blandas
+y una forma de contacto directa. Incluye además un chatbot que responde con un modelo de
+lenguaje ejecutado en local.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React 19** + **Vite 8**
+- **CSS propio** con variables de tema claro/oscuro, `clamp()` y breakpoints mobile-first
+- **oxlint** para el linting
+- Sin router: es una página única con anclas (`#inicio`, `#proyectos`, `#contacto`, …)
 
-## React Compiler
+## Estructura
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```
+src/
+├── components/   # Componentes de UI (uno por sección)
+├── data/         # Contenido desacoplado (proyectos, tecnologías, formación)
+├── hooks/        # useTheme
+├── services/     # Cliente HTTP del bot (SSE) + normalización de config
+├── styles/       # Un CSS por componente + theme.css / effects.css
+└── assets/       # Imágenes y logos
+```
 
-## Expanding the Oxlint configuration
+## Puesta en marcha
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+```bash
+npm install
+npm run dev      # servidor de desarrollo
+npm run build    # build de producción en dist/
+npm run preview  # previsualiza el build
+npm run lint     # linting
+```
+
+## Secciones
+
+| Sección | Ancla | Contenido |
+|---|---|---|
+| Sobre mí | `#inicio` | Foto, título, pitch y descarga del CV |
+| Proyectos | `#proyectos` | Proyectos destacados |
+| Herramientas | `#tecnologias` | Stack y logos |
+| Educación | `#educacion` | Formación académica |
+| Habilidades | `#habilidades-blandas` | Habilidades blandas |
+| Contacto | `#contacto` | Correo (copiar) y redes |
 
 ## Bot local del portafolio
 
-El proyecto usa un chat flotante de texto en `src/components/PortfolioBot.jsx`, conectado a una API compatible con OpenAI (por ejemplo, `llama-server`). El modelo se muestra mediante un pequeño botón: al pulsarlo se abre la conversación.
+El chat flotante (`src/components/PortfolioBot.jsx`) se conecta a una API compatible con
+OpenAI servida en local (por ejemplo `llama-server` de llama.cpp). El cliente vive en
+`src/services/llmClient.js` y usa **streaming SSE** con cancelación mediante
+`AbortController`.
 
-1. Inicia tu servidor local de modelos en `127.0.0.1:8080` y comprueba que expone `/v1`.
+1. Inicia tu servidor local en `127.0.0.1:8080` y comprueba que expone `/v1`.
 2. Copia la configuración de ejemplo:
 
    ```bash
@@ -29,4 +62,25 @@ El proyecto usa un chat flotante de texto en `src/components/PortfolioBot.jsx`, 
 3. Ajusta `VITE_LLM_PROXY_TARGET`, `VITE_LLM_MODEL` y, si hace falta, `VITE_LLM_PROXY_KEY`.
 4. Arranca el portafolio con `npm run dev`.
 
-El proxy de Vite expone `/v1` en el navegador y añade la clave en el servidor. No pongas una clave privada directamente en el componente.
+> El proxy de Vite expone `/v1` en el navegador y añade la clave en el servidor.
+> Nunca pongas una clave privada directamente en el componente: no debe llegar al bundle.
+
+Variables disponibles:
+
+| Variable | Descripción |
+|---|---|
+| `VITE_LLM_PROXY_TARGET` | Dirección del servidor local del modelo (sin `/v1`) |
+| `VITE_LLM_PROXY_KEY` | Bearer token opcional; se inyecta solo en el proxy |
+| `VITE_LLM_MODEL` | Nombre del modelo servido |
+
+## Accesibilidad y responsive
+
+- Landmarks `<header>` y `<main>`, skip link al contenido y foco visible.
+- CSS mobile-first (`min-width`) con layouts de 1, 2 y 3 columnas según el ancho.
+- Tema claro/oscuro con `data-theme` y respeto por `prefers-reduced-motion`.
+- Enlaces externos con `rel="noopener noreferrer"` y aviso de nueva pestaña.
+
+## Enlaces
+
+- GitHub: https://github.com/AlanG-z
+- LinkedIn: https://www.linkedin.com/in/alan-gutierrez-dev

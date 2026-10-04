@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { createLlmClient, normalizeLlmConfig } from '../services/llmClient'
 import { portfolioContext } from '../data/portfolioBot'
 import '../styles/PortfolioBot.css'
@@ -67,10 +67,10 @@ function PortfolioBot() {
   const requestControllerRef = useRef(null)
   const mountedRef = useRef(false)
 
-  const closeBot = () => {
+  const closeBot = useCallback(() => {
     requestControllerRef.current?.abort()
     setIsOpen(false)
-  }
+  }, [])
 
   useEffect(() => {
     mountedRef.current = true
@@ -90,7 +90,7 @@ function PortfolioBot() {
 
     document.addEventListener('keydown', closeOnEscape)
     return () => document.removeEventListener('keydown', closeOnEscape)
-  }, [isOpen])
+  }, [isOpen, closeBot])
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -161,7 +161,7 @@ function PortfolioBot() {
 
   return (
     <aside className="portfolio-bot" aria-label="Asistente del portafolio">
-      {isOpen ? (
+      {isOpen && (
         <section
           id="portfolio-bot-conversation"
           className="portfolio-bot-panel"
@@ -264,24 +264,26 @@ function PortfolioBot() {
             </button>
           </form>
         </section>
-      ) : (
-        <button
-          type="button"
-          className="portfolio-bot-launcher"
-          onClick={() => setIsOpen(true)}
-          aria-expanded="false"
-          aria-controls="portfolio-bot-conversation"
-          aria-label="Abrir conversación con el asistente"
-          title="Abrir conversación"
-        >
-          <span className="portfolio-bot-launcher-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5.5 3.5.9-3.5H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm2.5 6.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm5.5 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm5.5 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
-            </svg>
-          </span>
-          <span className="portfolio-bot-launcher-tooltip">Abrir conversación</span>
-        </button>
       )}
+
+      <button
+        type="button"
+        className="portfolio-bot-launcher"
+        onClick={() => setIsOpen((open) => !open)}
+        aria-expanded={isOpen}
+        aria-controls="portfolio-bot-conversation"
+        aria-label={isOpen ? 'Cerrar conversación con el asistente' : 'Abrir conversación con el asistente'}
+        title={isOpen ? 'Cerrar conversación' : 'Abrir conversación'}
+      >
+        <span className="portfolio-bot-launcher-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5.5 3.5.9-3.5H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm2.5 6.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm5.5 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm5.5 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
+          </svg>
+        </span>
+        <span className="portfolio-bot-launcher-tooltip">
+          {isOpen ? 'Cerrar conversación' : 'Abrir conversación'}
+        </span>
+      </button>
     </aside>
   )
 }
