@@ -27,6 +27,7 @@ Cada punto incluye el estado final y el archivo afectado.
 | 🟢 | Assets huérfanos | ⚠️ Parcial — `perfil2.png` borrado, `dart.svg` **se conserva** (sí se usa) |
 | 🟢 | README de plantilla | ✅ Resuelto |
 | ➕ | **Contacto roto en desktop** (detectado al verificar) | ✅ Resuelto — ver §5.1 |
+| ➕ | **Proyectos sin enlaces a código** (sección sugerida #1) | ✅ Implementado — ver §6 |
 
 ---
 
@@ -389,7 +390,77 @@ usa una sola clase de layout por elemento, por lo que no son susceptibles a este
 
 ---
 
-## 6. Verificación
+## 6. Proyectos con enlaces a demo y repositorio
+
+Implementa la **sección sugerida #1** del reporte (`reporte_AlanG-z.md`, "Secciones sugeridas
+para agregar"): los proyectos eran títulos + descripción, sin ningún enlace clicable a código
+real — el criterio #1 de filtrado en screening.
+
+### 6.1 Nuevo esquema de datos
+
+`src/data/proyectos.js` pasa de 2 campos a 5:
+
+```js
+{
+  titulo: 'Decisiones Aleatorias',
+  descripcion: 'Aplicación web para resolver decisiones al azar de forma rápida: …',
+  demo: 'https://desicion-aleatoria-ramdom.netlify.app/',
+  repositorio: null,   // pendiente
+  stack: [],           // pendiente
+}
+```
+
+| Campo | Tipo | Descripción |
+|---|---|---|
+| `titulo` | `string` | Nombre del proyecto |
+| `descripcion` | `string` | Texto descriptivo (se muestra en la tarjeta) |
+| `demo` | `string \| null` | URL del deploy (Netlify/Vercel) |
+| `repositorio` | `string \| null` | URL del código en GitHub |
+| `stack` | `string[]` | Mini stack del proyecto (chips) |
+
+### 6.2 Renderizado en `Proyectos.jsx`
+
+- **Mini stack** → `<ul class="proyecto-stack">` con chips monoespaciados.
+  Solo se renderiza si `stack.length > 0`.
+- **Enlaces** → `<div class="proyecto-links">` con dos botones:
+  - **Demo** — primario, fondo `var(--accent)`, icono de link externo.
+  - **Código** — secundario, borde, icono de GitHub.
+  - Solo se renderiza el botón si el campo correspondiente tiene valor.
+- Accesibilidad: cada enlace lleva `target="_blank"`, `rel="noopener noreferrer"` y un
+  `aria-label` descriptivo del tipo *"Ver la demo en vivo de {titulo} (se abre en una
+  pestaña nueva)"*.
+- El `<ul>` del stack lleva `aria-label="Tecnologías de {titulo}"`.
+
+### 6.3 Estilos en `Proyectos.css`
+
+- `.seccion` pasa a `display: flex; flex-direction: column` para que los enlaces se peguen al
+  borde inferior con `margin-top: auto` — así quedan alineados entre tarjetas aunque tengan
+  descripciones de largo muy distinto.
+- `.proyecto-stack` + `.proyecto-stack__chip`: chips redondeados, `white-space: nowrap`.
+- `.proyecto-links` + `.proyecto-link`: botones pill, hover con `translateY(-2px)` y
+  `:focus-visible` con outline de 2px.
+
+### 6.4 Estado de los datos
+
+| Proyecto | Demo | Repo | Stack |
+|---|---|---|---|
+| Genesis | — | — | — |
+| **Decisiones Aleatorias** | ✅ `desicion-aleatoria-ramdom.netlify.app` | — | — |
+| Gestor de Tareas | — | — | — |
+
+> **Pendiente de datos del autor**: URLs de GitHub y stacks reales de los 3 proyectos.
+> No se inventaron valores. El componente ya soporta ambos campos: alcanza con completar
+> `proyectos.js` y aparecen automáticamente.
+
+**Nota**: el bot (`src/data/portfolioBot.js`) importa `proyectos` y mapea
+`{ titulo, descripcion }`, así que la nueva descripción de "Decisiones Aleatorias" ya está
+disponible para el asistente sin cambios adicionales.
+
+**Verificado** en 320, 768 y 1372 px, en tema claro y oscuro.
+
+---
+
+## 7. Verificación
 
 ### Comandos
 
@@ -430,7 +501,7 @@ Renderizadas con Firefox headless y revisadas visualmente:
 
 ---
 
-## 7. Archivos modificados
+## 8. Archivos modificados
 
 ### Componentes y hooks
 - `src/App.jsx` — `<main>` correctamente anidado + `tabIndex`
@@ -457,7 +528,7 @@ Renderizadas con Firefox headless y revisadas visualmente:
 
 ---
 
-## 8. Pendiente (requiere decisión o contenido del autor)
+## 9. Pendiente (requiere decisión o contenido del autor)
 
 Estos puntos del reporte **no se pueden resolver con código** y quedan documentados:
 
@@ -465,7 +536,8 @@ Estos puntos del reporte **no se pueden resolver con código** y quedan document
    reporte lo señala como "no evaluable" por posible squash/force-push. Requiere rehacer el
    historial de forma deliberada; no se tocó ningún commit.
 2. **Secciones de contenido sugeridas** (requieren información real del autor):
-   - Proyectos con enlaces a repositorio y demo en vivo.
+   - ~~Proyectos con enlaces a repositorio y demo en vivo.~~ → **implementado** (§6);
+     faltan los datos de GitHub y stack de los 3 proyectos.
    - Sección "Proceso" / estudio de caso con métricas.
    - Sección "Escritura" / blog técnico.
    - Testimoniales o "con quién trabajé".
@@ -479,3 +551,30 @@ Estos puntos del reporte **no se pueden resolver con código** y quedan document
 
 *Documento generado aplicando los hallazgos de `reporte_AlanG-z.md`. Verificado con build,
 lint y revisión visual en 7 viewports.*
+
+---
+
+## Anexo — estado del repositorio al momento de esta actualización
+
+- Commit `aa63983` "Correcciones del reporte" contiene todo lo documentado en las secciones 1–5.
+- Las secciones 6–7 de este documento corresponden a cambios **posteriores**, aún sin commitear.
+- El autor tiene trabajo en curso en paralelo sobre el chatbot (`src/data/secciones.js`,
+  `scripts/start-bot.sh`, `system_prompt.txt`, `services/llmClient.js`, `vite.config.js`),
+  que **no fue modificado** por esta actualización.
+
+### Inconsistencia detectada (no corregida, por ser trabajo en curso del autor)
+
+Al renombrar "SearchMyCar" → "Decisiones Aleatorias" en `src/data/proyectos.js`, quedaron
+keywords obsoletas en `src/data/secciones.js` (líneas 59-61), que usa el bot para detectar
+intención:
+
+```js
+{
+  id: 'proyectos',
+  keywords: ['proyectos', 'proyecto', 'genesis', 'estacione', 'estacionamiento', 'aplicacion'],
+}
+```
+
+- `estacione` / `estacionamiento` ya no matchean nada (el proyecto fue reemplazado).
+- Falta keyword para el proyecto actual (`decisiones`, `aleatoria`, `azar`, `random`).
+- `portfolioBot.js` **no** está afectado: matchea por `titulo` contra el array `proyectos`.

@@ -191,6 +191,29 @@ export function createLlmClient({
     },
 
     /**
+     * Check that the local OpenAI-compatible server is reachable without
+     * starting a completion. Returns { ok, model } so the UI can show a
+     * connection state as soon as the app mounts.
+     */
+    async healthCheck() {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 8000);
+      try {
+        const res = await fetchImpl(`${base}/models`, {
+          headers: buildHeaders(),
+          signal: controller.signal,
+        });
+        if (!res.ok) return { ok: false, model: '' };
+        const data = await res.json();
+        return { ok: true, model: data?.data?.[0]?.id ?? '' };
+      } catch {
+        return { ok: false, model: '' };
+      } finally {
+        clearTimeout(timer);
+      }
+    },
+
+    /**
      * Best-effort discovery of the loaded model id. llama.cpp exposes
      * GET /models; some proxies do not. Returns '' when unavailable so
      * callers can fall back to the configured model name.

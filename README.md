@@ -22,6 +22,7 @@ src/
 ├── services/     # Cliente HTTP del bot (SSE) + normalización de config
 ├── styles/       # Un CSS por componente + theme.css / effects.css
 └── assets/       # Imágenes y logos
+system_prompt.txt  # Instrucciones del modelo (editable)
 ```
 
 ## Puesta en marcha
@@ -50,9 +51,28 @@ npm run lint     # linting
 El chat flotante (`src/components/PortfolioBot.jsx`) se conecta a una API compatible con
 OpenAI servida en local (por ejemplo `llama-server` de llama.cpp). El cliente vive en
 `src/services/llmClient.js` y usa **streaming SSE** con cancelación mediante
-`AbortController`.
+`AbortController`. Al iniciar comprueba `/v1/models`, muestra el estado de conexión y reintenta
+automáticamente si el servidor aún no está disponible. Cuando detecta una pregunta sobre una
+sección, desplaza la página hasta ella y la resalta. Las instrucciones del modelo viven en
+`system_prompt.txt`; el contexto y los títulos de sección se inyectan automáticamente.
 
-1. Inicia tu servidor local en `127.0.0.1:8080` y comprueba que expone `/v1`.
+1. Para iniciar el bot y el portafolio juntos:
+
+   ```bash
+   npm run bot
+   ```
+
+   El comando usa `/home/alan/llama-cpu-server.sh` y verifica
+   `/home/alan/sistema-prompt-cpu.txt`. Si tus rutas son distintas, define
+   `LLAMA_SERVER_SCRIPT` y `SYSTEM_PROMPT_FILE`.
+
+   También puedes iniciar todo por separado:
+
+   ```bash
+   bash /home/alan/llama-cpu-server.sh
+   npm run dev
+   ```
+
 2. Copia la configuración de ejemplo:
 
    ```bash
@@ -60,7 +80,9 @@ OpenAI servida en local (por ejemplo `llama-server` de llama.cpp). El cliente vi
    ```
 
 3. Ajusta `VITE_LLM_PROXY_TARGET`, `VITE_LLM_MODEL` y, si hace falta, `VITE_LLM_PROXY_KEY`.
-4. Arranca el portafolio con `npm run dev`.
+4. Si usaste `npm run bot`, no necesitas abrir otra terminal para `npm run dev`.
+5. El prompt base se toma de `SYSTEM_PROMPT_FILE` (por defecto
+   `/home/alan/sistema-prompt-cpu.txt`) y el contexto del portafolio se inyecta automáticamente.
 
 > El proxy de Vite expone `/v1` en el navegador y añade la clave en el servidor.
 > Nunca pongas una clave privada directamente en el componente: no debe llegar al bundle.
@@ -72,6 +94,7 @@ Variables disponibles:
 | `VITE_LLM_PROXY_TARGET` | Dirección del servidor local del modelo (sin `/v1`) |
 | `VITE_LLM_PROXY_KEY` | Bearer token opcional; se inyecta solo en el proxy |
 | `VITE_LLM_MODEL` | Nombre del modelo servido |
+| `SYSTEM_PROMPT_FILE` | Prompt base; por defecto `/home/alan/sistema-prompt-cpu.txt` |
 
 ## Accesibilidad y responsive
 
