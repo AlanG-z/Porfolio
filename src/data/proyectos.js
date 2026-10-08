@@ -17,7 +17,7 @@ export const proyectos = [
   },
   {
     titulo: 'Gestor de Tareas',
-    descripcion:'Una aplicación moderna de lista de tareas construida con Node.js, Express y Supabase.',
+    descripcion:'Aplicación web moderna para mantener una lista de tareas y llevar una organización, construida con Node.js, Express y Supabase.',
     demo: 'https://listas-pendiente-de-tareas.netlify.app/',
     repositorio: 'https://github.com/AlanG-z/Lista-de-tareas',
     stack: ['JavaScript','CSS','HTML'],

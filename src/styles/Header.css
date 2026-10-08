@@ -1,50 +1,13 @@
 /* ===== Navegación (mobile-first) ===== */
 
-.Header {
-  grid-column: 1 / -1;
-  grid-row: 2;
-  width: 100%;
-  margin: 0;
-  padding: 9px 4px 11px;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px 10px;
-  list-style: none;
-  font-size: 0.84rem;
-  line-height: 1.25;
-}
-
-.Header li {
-  min-width: 0;
-  text-align: center;
-}
-
-.Header a {
-  color: var(--text-main);
-  text-decoration: none;
-  white-space: nowrap;
-  transition: color 180ms ease;
-}
-
-.Header a:hover,
-.Header a:focus-visible {
-  color: var(--accent);
-}
-
-.Header a:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 5px;
-  border-radius: 3px;
-}
-
 .div-header {
   width: 100%;
-  min-height: 64px;
+  min-height: 60px;
   padding: 5px 8px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 2px 8px;
+  gap: 8px;
   background: var(--bg-header);
   color: var(--text-main);
   border-radius: 26px;
@@ -54,13 +17,21 @@
   top: 0;
   z-index: 100;
   backdrop-filter: blur(8px);
+  transition:
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease;
+}
+
+/* Se desliza hacia arriba al bajar y vuelve al hacer scroll hacia arriba. */
+.div-header.is-hidden {
+  transform: translateY(calc(-100% - 12px));
 }
 
 .logo {
-  grid-column: 1;
-  grid-row: 1;
   min-width: 0;
-  padding: 12px 14px;
+  padding: 10px 12px;
   white-space: nowrap;
 }
 
@@ -68,71 +39,222 @@
   margin: 0;
 }
 
-.header-actions {
-  grid-column: 2;
-  grid-row: 1;
+/* ===== Botón hamburguesa ===== */
+
+.header-toggle {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  background: var(--bg-card);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+
+.header-toggle:hover {
+  border-color: var(--accent);
+  transform: scale(1.04);
+}
+
+.header-toggle:active {
+  transform: scale(0.96);
+}
+
+.header-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.header-toggle__box {
+  width: 22px;
+  height: 16px;
+  display: grid;
+  align-content: space-between;
+}
+
+.header-toggle__bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 220ms ease, opacity 160ms ease, width 220ms ease;
+}
+
+/* La barra del medio es más corta: detalle que hace legible el ícono cerrado. */
+.header-toggle__bar:nth-child(2) {
+  width: 68%;
+  margin-left: auto;
+}
+
+.header-toggle[aria-expanded='true'] .header-toggle__bar {
+  width: 100%;
+  margin-left: 0;
+}
+
+.header-toggle[aria-expanded='true'] .header-toggle__bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.header-toggle[aria-expanded='true'] .header-toggle__bar:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.header-toggle[aria-expanded='true'] .header-toggle__bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ===== Panel desplegable ===== */
+
+.header-menu {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: none;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.header-menu.is-open {
   display: flex;
-  align-items: center;
-  padding-right: 4px;
+  animation: header-menu-in 200ms ease both;
 }
 
-@media (min-width: 481px) {
-  .div-header {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    gap: clamp(4px, 1.5vw, 12px);
-    padding-inline: 8px;
-    border-radius: 26px;
+@keyframes header-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
   }
-
-  .logo {
-    grid-column: auto;
-    grid-row: auto;
-  }
-
-  .header-actions {
-    grid-column: auto;
-    grid-row: auto;
-  }
-
-  .Header {
-    grid-column: auto;
-    grid-row: auto;
-    grid-template-columns: repeat(3, max-content);
-    justify-content: center;
-    align-content: center;
-    gap: 8px clamp(12px, 2.5vw, 24px);
-    padding: 14px 8px;
-  }
-
-  .Header li {
-    text-align: left;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
+
+.Header {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  list-style: none;
+}
+
+.Header a {
+  display: block;
+  padding: 11px 12px;
+  border-radius: 10px;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.Header a:hover,
+.Header a:focus-visible {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--accent);
+}
+
+.Header a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.header-actions {
+  display: flex;
+  padding: 0 12px 8px;
+}
+
+/* El toggle ocupa todo el ancho del panel para ser un objetivo táctil cómodo. */
+.header-actions .theme-toggle {
+  width: 100%;
+  justify-content: center;
+  padding-block: 10px;
+}
+
+/* ===== Desktop: nav horizontal centrada, sin hamburguesa ===== */
 
 @media (min-width: 861px) {
+  /* 3 columnas: logo (izq) · nav (centro real) · toggle (der).
+     El nav va en una columna `auto` flanked por dos `1fr`, así queda
+     centrado respecto del viewport y no respecto del espacio restante. */
   .div-header {
-    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-columns: 1fr auto 1fr;
     gap: 12px;
     padding: 6px 12px;
     border-radius: 30px;
   }
 
-  .Header {
-    width: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: clamp(18px, 3vw, 44px);
-    padding: 14px clamp(16px, 2.4vw, 24px);
-    font-size: inherit;
-    line-height: inherit;
+  .header-toggle {
+    display: none;
   }
 
   .logo {
-    padding: 14px 20px;
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  /* `display: contents` elimina la caja del wrapper en desktop: sus dos hijos
+     (nav y toggle) pasan a ser ítems de la grilla de 3 columnas de arriba.
+     El wrapper es un <div> sin semántica, así que no afecta la accesibilidad. */
+  .header-menu {
+    display: contents;
+  }
+
+  .Header {
+    grid-column: 2;
+    justify-self: center;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(18px, 3vw, 44px);
+  }
+
+  .Header a {
+    padding: 0;
+    border-radius: 3px;
+    font-size: inherit;
+    white-space: nowrap;
+    background: transparent;
+  }
+
+  .Header a:hover,
+  .Header a:focus-visible {
+    background: transparent;
+    color: var(--accent);
+  }
+
+  .Header a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 5px;
   }
 
   .header-actions {
-    padding-right: 6px;
+    grid-column: 3;
+    justify-self: end;
+    padding: 0;
+  }
+
+  .header-actions .theme-toggle {
+    width: auto;
+    padding-block: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .div-header,
+  .header-toggle__bar {
+    transition: none;
+  }
+
+  .header-menu.is-open {
+    animation: none;
   }
 }

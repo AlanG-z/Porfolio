@@ -28,6 +28,7 @@ Cada punto incluye el estado final y el archivo afectado.
 | 🟢 | README de plantilla | ✅ Resuelto |
 | ➕ | **Contacto roto en desktop** (detectado al verificar) | ✅ Resuelto — ver §5.1 |
 | ➕ | **Proyectos sin enlaces a código** (sección sugerida #1) | ✅ Implementado — ver §6 |
+| ➕ | **Navegación móvil + auto-ocultado del header** | ✅ Implementado — ver §7 |
 
 ---
 
@@ -460,7 +461,169 @@ disponible para el asistente sin cambios adicionales.
 
 ---
 
-## 7. Verificación
+## 7. Navegación móvil: hamburguesa + auto-ocultado
+
+### 7.1 Centrado real del nav en desktop
+
+Al meter el toggle de tema dentro del panel móvil, el wrapper `.header-menu` pasó a ser
+`display: flex` con `justify-content: space-between` en desktop. Eso dejaba los links
+**apelotonados a la izquierda** junto al logo: centrarlos respecto del espacio restante no es
+lo mismo que centrarlos respecto del viewport, porque el logo y el toggle tienen anchos distintos.
+
+Corrección — grilla de 3 columnas con el nav en la del medio, flanqueado por dos `1fr`:
+
+```css
+@media (min-width: 861px) {
+  .div-header { grid-template-columns: 1fr auto 1fr; }
+
+  .logo           { grid-column: 1; justify-self: start; }
+  .header-menu    { display: contents; }   /* el wrapper deja de generar caja */
+  .Header         { grid-column: 2; justify-self: center; }
+  .header-actions { grid-column: 3; justify-self: end; }
+}
+```
+
+`display: contents` hace que el `<ul>` y el toggle pasen a ser ítems de la grilla del header,
+permitiendo que el nav quede en la columna central real. El wrapper es un `<div>` sin semántica,
+así que no afecta el árbol de accesibilidad.
+
+**Verificado** en 900, 1100 y 1440 px: el centro del nav coincide con el centro del viewport.
+
+### 7.2 Botón hamburguesa
+
+En pantallas de menos de 861 px los 6 links + el toggle de tema colapsan en un panel
+desplegable. El toggle de tema **pasa a vivir dentro del menú** (antes estaba siempre visible
+al lado del logo), así queda un único control en la fila superior.
+
+`src/components/Header.jsx`:
+
+- Estado `menuOpen` con `useState`.
+- Botón `.header-toggle` con 3 barras que rotan a una **X** cuando está abierto
+  (transición hecha con `:nth-child` + `transform`).
+- El `<ul>` y el `.header-actions` se envuelven en un `.header-menu`, que en desktop vuelve a
+  ser una fila (`flex-direction: row`) — por eso el DOM soporta ambas layouts sin duplicar nodos.
+- Los links se generan desde un array `NAV_LINKS` (antes estaban escritos a mano en el JSX).
+- Cada link hace `setMenuOpen(false)` al pulsarse.
+
+Accesibilidad del botón:
+
+```jsx
+<button
+  type="button"
+  className="header-toggle"
+  aria-expanded={menuOpen}
+  aria-controls="header-menu"
+  aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+>
+```
+
+- `aria-expanded` refleja el estado real.
+- `aria-controls` apunta al panel.
+- `aria-label` alterna entre "Abrir menú" / "Cerrar menú".
+- **Escape** cierra el menú y devuelve el foco al botón (`toggleRef.current?.focus()`).
+- Al cruzar a desktop (`matchMedia('(min-width: 861px)')`) el menú se cierra solo, para no
+  quedar en un estado inconsistente tras un resize.
+
+### 7.3 Ocultar al bajar / mostrar al subir
+
+Nuevo hook **`src/hooks/useHideOnScroll.js`**:
+
+```js
+const MIN_SCROLL = 140       // por debajo de esto nunca se oculta
+const DELTA_THRESHOLD = 8    // ignora micro-movimientos (rubber-banding / trackpad)
+
+export function useHideOnScroll({ enabled = true } = {}) {
+  const [hidden, setHidden] = useState(false)
+  const lastY = useRef(0)
+
+  useEffect(() => {
+    if (!enabled) return undefined
+    lastY.current = window.scrollY
+
+    const onScroll = () => {
+      const currentY = Math.max(window.scrollY, 0)
+      const delta = currentY - lastY.current
+      if (Math.abs(delta) < DELTA_THRESHOLD) return
+      setHidden(delta > 0 && currentY > MIN_SCROLL)
+      lastY.current = currentY
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [enabled])
+
+  return hidden
+}
+```
+
+Decisiones de diseño:
+
+| Detalle | Motivo |
+|---|---|
+| `passive: true` | No bloquea el hilo principal mientras se scrollea |
+| `DELTA_THRESHOLD = 8px` | Sin esto el header tiembla: el momentum de iOS y los trackpads finos generan eventos de 1-3 px |
+| `MIN_SCROLL = 140px` | En la zona de lectura inicial el header nunca se oculta |
+| `currentY > 0` con `Math.max` | Evita valores negativos del rubber-banding en iOS |
+| `enabled: !menuOpen` | Con el menú abierto el header **nunca** se oculta (sería imposible cerrarlo) |
+| `setState` fuera del `useEffect` | El `setHidden` ocurre dentro del listener, no en el cuerpo del efecto → sin warning `react(set-state-in-effect)` de oxlint |
+
+CSS (`src/styles/Header.css`):
+
+```css
+.div-header {
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), /* … */
+}
+.div-header.is-hidden {
+  transform: translateY(calc(-100% - 12px));
+}
+```
+
+Como el header es `position: sticky`, el `transform` lo desliza fuera del viewport **sin
+ocupar hueco en el flujo**: el contenido de abajo queda al borde superior.
+
+Con `prefers-reduced-motion: reduce` se desactivan la transición del header y la animación
+de apertura del panel.
+
+### 7.4 Corrección del skip link (detectada al verificar)
+
+Al probar con navegación por fragmento (`#proyectos`) apareció el botón "Saltar al contenido"
+**flotando en la parte inferior de la pantalla**. El patrón original lo ocultaba con:
+
+```css
+transform: translateY(calc(-100% - 1.5rem));   /* ← frágil */
+```
+
+El porcentaje dentro de `translateY` se resolvió de forma inconsistente y el elemento quedaba
+visible fuera de lugar. Se reemplazó por una técnica determinista, sin porcentajes ni `calc`:
+
+```css
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+```
+
+Se oculta con `opacity` y **no** con `visibility: hidden` ni `display: none`, porque cualquiera
+de esos dos lo saca del orden de tabulación y rompería el skip link (que existe justamente para
+poder receives focus con Tab).
+
+**Verificado:** invisible con carga normal y con navegación por fragmento; aparece arriba al
+recibir foco.
+
+---
+
+## 8. Verificación
 
 ### Comandos
 
@@ -485,12 +648,16 @@ Renderizadas con Firefox headless y revisadas visualmente:
 | Viewport | Verificación |
 |---|---|
 | 280 px | Header en 2 filas, sin desbordes; rol de texto envuelve correctamente |
-| 320 px | Header 2 filas, nav 3 columnas, todas las secciones en 1 columna |
+| 320 px | Hamburguesa visible; secciones en 1 columna |
+| 390 px | Hamburguesa cerrada; skip link invisible incluso con fragmento `#proyectos` |
 | 496 px | Réplica de la referencia: header ~84px, foto centrada, composición intacta |
-| 768 px | Header compacto, hero centrado, proyectos 2 col, herramientas 3 col |
+| 768 px | Hamburguesa ( breakpoint 861px); proyectos 2 col, herramientas 3 col |
 | 1024 px | Hero 2 columnas desktop, footer correcto |
 | 1372 px | **Contacto centrado** (regresión corregida, ver §5.1); resto de secciones correctas |
-| 1440 px | Layout desktop completo, tema oscuro sin destello |
+| 1440 px | Nav horizontal sin hamburguesa; layout desktop completo, tema oscuro sin destello |
+| Estado menú abierto (320px) | X animado, 6 links apilados, toggle de tema a todo el ancho |
+| Estado header oculto (390px y 1440px) | Se desliza fuera del viewport sin dejar hueco en el flujo (verificado con scroll programático) |
+| Nav desktop (900 / 1100 / 1440 px) | Links centrados respecto del viewport, toggle a la derecha |
 | Página completa (320, 768 y 1372) | Todas las secciones, Reveal, footer y chat flotante |
 
 ### Checks estáticos
@@ -498,12 +665,16 @@ Renderizadas con Firefox headless y revisadas visualmente:
 - `@media (max-width)` en `src/`: **0 coincidencias** (mobile-first completo).
 - `font-size: Npx` en `src/`: **0 coincidencias**.
 - Referencias a Tailwind en CSS: solo el comentario del reset propio.
+- `@media (prefers-reduced-motion)`: presente en `Header.css` (transiciones del panel) y en
+  `effects.css`.
 
 ---
 
-## 8. Archivos modificados
+## 9. Archivos modificados
 
 ### Componentes y hooks
+- `src/hooks/useHideOnScroll.js` — **nuevo**: oculta el header al bajar, muestra al subir
+- `src/components/Header.jsx` — hamburguesa, panel desplegable, `Escape`, cierre en resize
 - `src/App.jsx` — `<main>` correctamente anidado + `tabIndex`
 - `src/components/Header.jsx` — skip link
 - `src/components/Contacto.jsx` — GitHub real, `rel`, `aria-label`
@@ -528,7 +699,7 @@ Renderizadas con Firefox headless y revisadas visualmente:
 
 ---
 
-## 9. Pendiente (requiere decisión o contenido del autor)
+## 10. Pendiente (requiere decisión o contenido del autor)
 
 Estos puntos del reporte **no se pueden resolver con código** y quedan documentados:
 

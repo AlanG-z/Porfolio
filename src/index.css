@@ -87,6 +87,9 @@ button {
 
 /* ===== Navegación por teclado ===== */
 
+/* Invisible pero enfocable con Tab (requisito de un skip link):
+   se oculta con opacity, NO con visibility/display, para que siga en el
+   orden de tabulación. Al recibir foco aparece en la esquina superior. */
 .skip-link {
   position: fixed;
   top: 0.5rem;
@@ -98,18 +101,26 @@ button {
   color: #191714;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.9rem;
-  transform: translateY(calc(-100% - 1.5rem));
-  transition: transform 180ms ease;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 160ms ease, transform 160ms ease;
 }
 
 :root[data-theme='light'] .skip-link {
   color: #fff;
 }
 
+.skip-link:focus,
+.skip-link:focus-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
 .skip-link:focus-visible {
   outline: 3px solid var(--accent-2);
   outline-offset: 3px;
-  transform: translateY(0);
 }
 
 section[id] {
@@ -123,5 +134,4 @@ section[id] {
 
   .skip-link {
     transition: none;
-  }
-}
+  }}
