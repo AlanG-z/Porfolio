@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import { useHideOnScroll } from '../hooks/useHideOnScroll'
 import '../styles/Header.css'
 import ThemeToggle from './ThemeToggle'
 
@@ -17,10 +16,6 @@ const DESKTOP_QUERY = '(min-width: 861px)'
 function Header({ theme = 'dark', onToggleTheme }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const toggleRef = useRef(null)
-
-  // Con el menú abierto el header nunca se oculta.
-  const hidden = useHideOnScroll({ enabled: !menuOpen })
-  const isHidden = hidden && !menuOpen
 
   // Al pasar a desktop el panel móvil deja de aplicar: lo cerramos.
   useEffect(() => {
@@ -51,7 +46,7 @@ function Header({ theme = 'dark', onToggleTheme }) {
       <a className="skip-link" href="#contenido">Saltar al contenido</a>
 
       <nav
-        className={`div-header${isHidden ? ' is-hidden' : ''}`}
+        className="div-header"
         aria-label="Navegación principal"
       >
         <div className="logo"><p>{'</>'}Alan</p></div>

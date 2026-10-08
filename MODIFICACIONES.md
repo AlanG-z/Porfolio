@@ -28,7 +28,8 @@ Cada punto incluye el estado final y el archivo afectado.
 | 🟢 | README de plantilla | ✅ Resuelto |
 | ➕ | **Contacto roto en desktop** (detectado al verificar) | ✅ Resuelto — ver §5.1 |
 | ➕ | **Proyectos sin enlaces a código** (sección sugerida #1) | ✅ Implementado — ver §6 |
-| ➕ | **Navegación móvil + auto-ocultado del header** | ✅ Implementado — ver §7 |
+| ➕ | **Navegación móvil + hamburger** | ✅ Implementado — ver §7.1-7.2 |
+| ➕ | Auto-ocultado del navbar | ❌ Retirado por decisión del autor — ver §7.3 |
 
 ---
 
@@ -524,13 +525,32 @@ Accesibilidad del botón:
 - Al cruzar a desktop (`matchMedia('(min-width: 861px)')`) el menú se cierra solo, para no
   quedar en un estado inconsistente tras un resize.
 
-### 7.3 Ocultar al bajar / mostrar al subir
+### 7.3 Auto-ocultado del navbar — RETIRADO
 
-Nuevo hook **`src/hooks/useHideOnScroll.js`**:
+> **Estado: eliminado.** El navbar queda siempre visible al scrollear.
+
+Se llegó a implementar el comportamiento de la spec *"Navbar hide on scroll"* (ocultar al
+bajar, mostrar al subir, siempre visible arriba de todo) con el hook
+`src/hooks/useHideOnScroll.js`. Las 4 reglas se verificaron como correctas en Firefox con
+scroll de rueda simulado. Aun así se optó por quitarlo: en un portfolio de una sola página el
+nav tiene 6 entradas y ocupa ~60px, así que ocultarlo quita acceso rápido a todo el contenido
+sin ganar espacio significativo.
+
+**Cambios aplicados:**
+- `src/hooks/useHideOnScroll.js` — eliminado.
+- `src/components/Header.jsx` — sin import del hook, sin estado `hidden`, sin clase `is-hidden`.
+- `src/styles/Header.css` — sin la regla `.is-hidden` ni la transición de `transform`.
+
+**Implementación que se descartó** (documentada por si se quiere reactivar):
 
 ```js
-const MIN_SCROLL = 140       // por debajo de esto nunca se oculta
-const DELTA_THRESHOLD = 8    // ignora micro-movimientos (rubber-banding / trackpad)
+const TOP_OFFSET = 80        // arriba de todo siempre se ve
+const HIDE_THRESHOLD = 6     // al bajar, filtra el temblor del trackpad
+const SHOW_THRESHOLD = 1     // al subir, 1px alcanza
+
+function getScrollY() {
+  return window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0
+}
 
 export function useHideOnScroll({ enabled = true } = {}) {
   const [hidden, setHidden] = useState(false)
@@ -538,51 +558,40 @@ export function useHideOnScroll({ enabled = true } = {}) {
 
   useEffect(() => {
     if (!enabled) return undefined
-    lastY.current = window.scrollY
+    lastY.current = getScrollY()
 
     const onScroll = () => {
-      const currentY = Math.max(window.scrollY, 0)
+      const currentY = Math.max(getScrollY(), 0)
       const delta = currentY - lastY.current
-      if (Math.abs(delta) < DELTA_THRESHOLD) return
-      setHidden(delta > 0 && currentY > MIN_SCROLL)
+
+      if (currentY <= TOP_OFFSET) setHidden(false)
+      else if (delta <= -SHOW_THRESHOLD) setHidden(false)
+      else if (delta >= HIDE_THRESHOLD) setHidden(true)
+
       lastY.current = currentY
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    window.addEventListener('scroll', onScroll, { passive: true, capture: true })
+    return () => window.removeEventListener('scroll', onScroll, { capture: true })
   }, [enabled])
 
   return hidden
 }
 ```
 
-Decisiones de diseño:
-
-| Detalle | Motivo |
-|---|---|
-| `passive: true` | No bloquea el hilo principal mientras se scrollea |
-| `DELTA_THRESHOLD = 8px` | Sin esto el header tiembla: el momentum de iOS y los trackpads finos generan eventos de 1-3 px |
-| `MIN_SCROLL = 140px` | En la zona de lectura inicial el header nunca se oculta |
-| `currentY > 0` con `Math.max` | Evita valores negativos del rubber-banding en iOS |
-| `enabled: !menuOpen` | Con el menú abierto el header **nunca** se oculta (sería imposible cerrarlo) |
-| `setState` fuera del `useEffect` | El `setHidden` ocurre dentro del listener, no en el cuerpo del efecto → sin warning `react(set-state-in-effect)` de oxlint |
-
-CSS (`src/styles/Header.css`):
-
 ```css
-.div-header {
-  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), /* … */
-}
-.div-header.is-hidden {
-  transform: translateY(calc(-100% - 12px));
-}
+.div-header { transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), /* … */ }
+.div-header.is-hidden { transform: translateY(calc(-100% - 12px)); }
 ```
 
-Como el header es `position: sticky`, el `transform` lo desliza fuera del viewport **sin
-ocupar hueco en el flujo**: el contenido de abajo queda al borde superior.
+Notas que siguen siendo válidas si se reactiva:
 
-Con `prefers-reduced-motion: reduce` se desactivan la transición del header y la animación
-de apertura del panel.
+- `capture: true` porque los eventos `scroll` **no burbujean**; sin él el listener se pierde
+  si el scroller real es `body`/`documentElement` en vez de la ventana.
+- `getScrollY()` con fallback para no asumir cuál es el scroller.
+- `enabled: !menuOpen` para que el navbar no se oculte con el menú abierto.
+- Seguro usar `capture`: el handler compara la posición de scroll de la **página**, así que el
+  scroll interno del chat produce `delta ≈ 0` y no dispara nada.
 
 ### 7.4 Corrección del skip link (detectada al verificar)
 
@@ -656,7 +665,7 @@ Renderizadas con Firefox headless y revisadas visualmente:
 | 1372 px | **Contacto centrado** (regresión corregida, ver §5.1); resto de secciones correctas |
 | 1440 px | Nav horizontal sin hamburguesa; layout desktop completo, tema oscuro sin destello |
 | Estado menú abierto (320px) | X animado, 6 links apilados, toggle de tema a todo el ancho |
-| Estado header oculto (390px y 1440px) | Se desliza fuera del viewport sin dejar hueco en el flujo (verificado con scroll programático) |
+| Navbar fijo al scrollear (1440px) | Queda visible tras scrollear 1000px (comportamiento actual) |
 | Nav desktop (900 / 1100 / 1440 px) | Links centrados respecto del viewport, toggle a la derecha |
 | Página completa (320, 768 y 1372) | Todas las secciones, Reveal, footer y chat flotante |
 
@@ -673,7 +682,6 @@ Renderizadas con Firefox headless y revisadas visualmente:
 ## 9. Archivos modificados
 
 ### Componentes y hooks
-- `src/hooks/useHideOnScroll.js` — **nuevo**: oculta el header al bajar, muestra al subir
 - `src/components/Header.jsx` — hamburguesa, panel desplegable, `Escape`, cierre en resize
 - `src/App.jsx` — `<main>` correctamente anidado + `tabIndex`
 - `src/components/Header.jsx` — skip link
