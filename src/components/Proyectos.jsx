@@ -18,10 +18,12 @@ function Proyectos() {
                         {stack.map((tecnologia) => (
                             <li className="proyecto-stack__chip" key={tecnologia}>{tecnologia}</li>
                         ))}
+
                     </ul>
                 )}
 
                 {(demo || repositorio) && (
+                    
                     <div className="proyecto-links">
                         {demo && (
                             <a
