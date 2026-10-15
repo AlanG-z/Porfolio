@@ -1,5 +1,8 @@
 # Portafolio — Alan Gutierrez
 
+[![Node.js v24.20.0](https://img.shields.io/badge/Node.js-v24.20.0-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![npm v11.19.0](https://img.shields.io/badge/npm-v11.19.0-CB3837?logo=npm&logoColor=white)](https://www.npmjs.com/)
+
 Portafolio personal de una página (SPA) construido con React y Vite. Presenta el perfil,
 los proyectos destacados, el stack de herramientas, la formación, las habilidades blandas
 y una forma de contacto directa. Incluye además un chatbot que responde con un modelo de
