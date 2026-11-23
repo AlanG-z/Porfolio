@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { ArrowRight, Bot, MessageCircle, Send, X } from 'lucide-react'
 import { createLlmClient, normalizeLlmConfig } from '../services/llmClient'
 import { portfolioContext } from '../data/portfolioBot'
 import { findPortfolioSection, portfolioSections } from '../data/secciones'
@@ -265,9 +266,7 @@ function PortfolioBot() {
           <header className="portfolio-bot-header">
             <div className="portfolio-bot-heading">
               <span className="portfolio-bot-avatar" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 2.5a9.5 9.5 0 0 0-9.5 9.5c0 5.25 4.25 9.5 9.5 9.5 1.2 0 2.35-.23 3.4-.64L20 22l-1.15-3.52A9.47 9.47 0 0 0 21.5 12 9.5 9.5 0 0 0 12 2.5Zm0 2a7.5 7.5 0 0 1 6.66 4.04c-.86-.37-1.8-.58-2.78-.58-3.2 0-5.8 2.03-5.8 4.52 0 .9.38 1.75 1.04 2.43-1.08.48-2.35.63-3.54.4A7.47 7.47 0 0 1 4.5 12 7.5 7.5 0 0 1 12 4.5Zm3.88 6.46c1.94 0 3.52 1.14 3.52 2.54s-1.58 2.54-3.52 2.54-3.52-1.14-3.52-2.54 1.58-2.54 3.52-2.54Zm-7.2 0c.26 0 .5.03.73.09a2.95 2.95 0 0 0-.1.8c0 1.2.77 2.2 1.88 2.72-.5.3-1.11.46-1.76.46-1.4 0-2.53-.94-2.53-2.1s1.13-1.97 2.53-1.97Z" />
-                </svg>
+                <Bot size={23} strokeWidth={1.9} />
               </span>
               <div>
                 <h2 id="portfolio-bot-title">Conversación con Alan</h2>
@@ -286,9 +285,7 @@ function PortfolioBot() {
               onClick={closeBot}
               aria-label="Cerrar conversación"
             >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="m6.7 5.3 12 12-1.4 1.4-12-12 1.4-1.4Zm10.6 0 1.4 1.4-12 12-1.4-1.4 12-12Z" />
-              </svg>
+              <X size={18} strokeWidth={2} aria-hidden="true" />
             </button>
           </header>
 
@@ -328,9 +325,7 @@ function PortfolioBot() {
               onClick={() => navigateToSection(activeSection)}
             >
               <span>Ir a {activeSection.title}</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="m13.2 5.3 6.7 6.7-6.7 6.7-1.4-1.4 4.3-4.3H4v-2h12.1l-4.3-4.3 1.4-1.4Z" />
-              </svg>
+              <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
             </button>
           )}
 
@@ -363,9 +358,7 @@ function PortfolioBot() {
               disabled={isLoading}
             />
             <button type="submit" disabled={!draft.trim() || isLoading} aria-label="Enviar mensaje">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="m3.4 20.4 17.45-8.4a1 1 0 0 0 0-1.8L3.4 3.6a.75.75 0 0 0-1.06 1.02L5.2 12l-2.86 7.38a.75.75 0 0 0 1.06 1.02ZM6.8 17.65l2.7-5.65 8.86-.05L6.8 17.65Z" />
-              </svg>
+              <Send size={18} strokeWidth={2} aria-hidden="true" />
             </button>
           </form>
         </section>
@@ -381,9 +374,9 @@ function PortfolioBot() {
         title={isOpen ? 'Cerrar conversación' : 'Abrir conversación'}
       >
         <span className="portfolio-bot-launcher-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5.5 3.5.9-3.5H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm2.5 6.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm5.5 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm5.5 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
-          </svg>
+          {isOpen
+            ? <X size={21} strokeWidth={2} />
+            : <MessageCircle size={21} strokeWidth={2} />}
         </span>
         <span
           className={`portfolio-bot-launcher-status ${connectionState}`}

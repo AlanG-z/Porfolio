@@ -1,3 +1,4 @@
+import { CodeXml, Download } from 'lucide-react'
 import '../styles/SobreMi.css'
 import profileImage from '../assets/Perfil.webp'
 import Reveal from './Reveal'
@@ -18,9 +19,7 @@ function SobreMi() {
                         href="/Alan_Gutierrez_CV.pdf"
                         download="Alan-Gutierrez-CV.pdf"
                     >
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M12 3v11m0 0 4-4m-4 4-4-4M5 18.5v1A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-1" />
-                        </svg>
+                        <Download size={17} strokeWidth={1.8} aria-hidden="true" />
                         <span>Descargar CV</span>
                     </a>
                     <span className="hero-actions-note">Formato PDF</span>
@@ -39,7 +38,7 @@ function SobreMi() {
                     />
                 </div>
                 <span className="profile-portrait__code" aria-hidden="true">
-                    &lt;/&gt;
+                    <CodeXml size={20} strokeWidth={1.9} />
                 </span>
                 <span className="profile-portrait__dot" aria-hidden="true" />
             </div>

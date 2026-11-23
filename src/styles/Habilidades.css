@@ -55,9 +55,11 @@
   border-radius: 50%;
   background: var(--accent);
   color: #191714;
-  font-family: Arial, sans-serif;
-  font-size: 0.8rem;
-  font-weight: 800;
+}
+
+.soft-skill-check svg {
+  width: 14px;
+  height: 14px;
 }
 
 :root[data-theme='light'] .soft-skill-check {

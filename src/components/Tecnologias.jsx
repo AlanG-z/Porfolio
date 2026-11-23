@@ -11,9 +11,14 @@ function Tecnologias() {
                 <p>Las tecnologías que uso para construir interfaces y aplicaciones web.</p>
             </div>
             <div className="technology-grid">
-                {herramientas.map(({ nombre, logo }, index) => (
+                {herramientas.map(({ nombre, Icono, color }, index) => (
                     <Reveal as="article" className="technology-card" delay={index % 3 === 1 ? 'reveal-delay-1' : index % 3 === 2 ? 'reveal-delay-2' : ''} key={nombre}>
-                        <img src={logo} alt={nombre} loading="lazy" />
+                        <Icono
+                            className="technology-icon"
+                            style={{ color }}
+                            aria-hidden="true"
+                            focusable="false"
+                        />
                         <span>{nombre}</span>
                     </Reveal>
                 ))}

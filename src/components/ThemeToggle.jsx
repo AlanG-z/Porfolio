@@ -1,7 +1,9 @@
+import { Moon, Sun } from 'lucide-react'
 import '../styles/ThemeToggle.css'
 
 function ThemeToggle({ theme, onToggle }) {
   const isDark = theme === 'dark'
+  const ThemeIcon = isDark ? Sun : Moon
 
   return (
     <button
@@ -12,7 +14,7 @@ function ThemeToggle({ theme, onToggle }) {
       title={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
     >
       <span className="theme-toggle-track" aria-hidden="true">
-        <span className="theme-toggle-icon">{isDark ? '☀️' : '🌙'}</span>
+        <ThemeIcon className="theme-toggle-icon" size={16} strokeWidth={2.2} />
       </span>
       <span className="theme-toggle-text">{isDark ? 'Claro' : 'Oscuro'}</span>
     </button>

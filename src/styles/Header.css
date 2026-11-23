@@ -31,6 +31,14 @@
 
 .logo p {
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.logo-icon {
+  color: var(--accent);
+  flex-shrink: 0;
 }
 
 /* ===== Botón hamburguesa ===== */
@@ -62,44 +70,9 @@
   outline-offset: 3px;
 }
 
-.header-toggle__box {
+.header-toggle svg {
   width: 22px;
-  height: 16px;
-  display: grid;
-  align-content: space-between;
-}
-
-.header-toggle__bar {
-  display: block;
-  width: 100%;
-  height: 2px;
-  border-radius: 2px;
-  background: currentColor;
-  transition: transform 220ms ease, opacity 160ms ease, width 220ms ease;
-}
-
-/* La barra del medio es más corta: detalle que hace legible el ícono cerrado. */
-.header-toggle__bar:nth-child(2) {
-  width: 68%;
-  margin-left: auto;
-}
-
-.header-toggle[aria-expanded='true'] .header-toggle__bar {
-  width: 100%;
-  margin-left: 0;
-}
-
-.header-toggle[aria-expanded='true'] .header-toggle__bar:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-
-.header-toggle[aria-expanded='true'] .header-toggle__bar:nth-child(2) {
-  opacity: 0;
-  transform: scaleX(0);
-}
-
-.header-toggle[aria-expanded='true'] .header-toggle__bar:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
+  height: 22px;
 }
 
 /* ===== Panel desplegable ===== */
@@ -243,10 +216,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .header-toggle__bar {
-    transition: none;
-  }
-
   .header-menu.is-open {
     animation: none;
   }

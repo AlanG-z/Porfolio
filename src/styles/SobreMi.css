@@ -121,11 +121,14 @@
   border-radius: 50%;
   background: color-mix(in srgb, var(--bg-section) 86%, transparent);
   color: var(--accent);
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.85rem;
-  font-weight: 700;
+  line-height: 1;
   box-shadow: 0 12px 30px var(--shadow);
   backdrop-filter: blur(8px);
+}
+
+.profile-portrait__code svg {
+  width: 20px;
+  height: 20px;
 }
 
 .profile-portrait__dot {

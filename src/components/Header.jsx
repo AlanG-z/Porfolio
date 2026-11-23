@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { CodeXml, Menu, X } from 'lucide-react'
 import '../styles/Header.css'
 import ThemeToggle from './ThemeToggle'
 
@@ -49,7 +50,12 @@ function Header({ theme = 'dark', onToggleTheme }) {
         className="div-header"
         aria-label="Navegación principal"
       >
-        <div className="logo"><p>{'</>'}Alan</p></div>
+        <div className="logo">
+          <p>
+            <CodeXml className="logo-icon" size={18} strokeWidth={2.2} aria-hidden="true" />
+            <span>Alan</span>
+          </p>
+        </div>
 
         <button
           ref={toggleRef}
@@ -60,11 +66,9 @@ function Header({ theme = 'dark', onToggleTheme }) {
           aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
           onClick={() => setMenuOpen((open) => !open)}
         >
-          <span className="header-toggle__box" aria-hidden="true">
-            <span className="header-toggle__bar" />
-            <span className="header-toggle__bar" />
-            <span className="header-toggle__bar" />
-          </span>
+          {menuOpen
+            ? <X size={22} strokeWidth={2} aria-hidden="true" />
+            : <Menu size={22} strokeWidth={2} aria-hidden="true" />}
         </button>
 
         <div

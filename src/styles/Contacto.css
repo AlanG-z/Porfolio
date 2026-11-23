@@ -127,7 +127,6 @@
 .email-copy-avatar svg {
     width: 22px;
     height: 22px;
-    fill: currentColor;
 }
 
 .email-copy-text {
@@ -165,7 +164,6 @@
 .email-copy-btn svg {
     width: 16px;
     height: 16px;
-    fill: currentColor;
 }
 
 :root[data-theme='light'] .email-copy-btn {
@@ -299,7 +297,6 @@
 .contact-social-list svg {
     width: 19px;
     height: 19px;
-    fill: currentColor;
 }
 
 @media (min-width: 481px) {

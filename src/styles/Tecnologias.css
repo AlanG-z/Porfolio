@@ -50,10 +50,17 @@
     box-shadow: 0 12px 24px var(--shadow);
 }
 
-.technology-card img {
+.technology-icon {
     width: 46px;
     height: 46px;
-    object-fit: contain;
+    flex-shrink: 0;
+    filter: drop-shadow(0 5px 7px color-mix(in srgb, currentColor 28%, transparent));
+    transition: transform 180ms ease, filter 180ms ease;
+}
+
+.technology-card:hover .technology-icon {
+    transform: scale(1.08) rotate(-2deg);
+    filter: drop-shadow(0 7px 10px color-mix(in srgb, currentColor 38%, transparent));
 }
 
 .technology-card span {
@@ -86,7 +93,7 @@
         gap: 12px;
     }
 
-    .technology-card img {
+    .technology-icon {
         width: 52px;
         height: 52px;
     }

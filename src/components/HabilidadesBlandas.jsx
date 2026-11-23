@@ -1,3 +1,4 @@
+import { Check } from 'lucide-react'
 import '../styles/Habilidades.css'
 import { habilidadesBlandas } from '../data/formacion'
 import Reveal from './Reveal'
@@ -21,7 +22,9 @@ function HabilidadesBlandas() {
             delay={delayByIndex[index % delayByIndex.length]}
             key={habilidad}
           >
-            <span className="soft-skill-check" aria-hidden="true">✓</span>
+            <span className="soft-skill-check" aria-hidden="true">
+              <Check size={14} strokeWidth={3} />
+            </span>
             <span>{habilidad}</span>
           </Reveal>
         ))}

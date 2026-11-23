@@ -12,6 +12,8 @@ lenguaje ejecutado en local.
 
 - **React 19** + **Vite 8**
 - **CSS propio** con variables de tema claro/oscuro, `clamp()` y breakpoints mobile-first
+- **lucide-react** para los iconos de interfaz
+- **react-icons** (`si`, `vsc` y `fa6`) para los logos de tecnologías y redes sociales
 - **oxlint** para el linting
 - Sin router: es una página única con anclas (`#inicio`, `#proyectos`, `#contacto`, …)
 
@@ -24,7 +26,7 @@ src/
 ├── hooks/        # useTheme
 ├── services/     # Cliente HTTP del bot (SSE) + normalización de config
 ├── styles/       # Un CSS por componente + theme.css / effects.css
-└── assets/       # Imágenes y logos
+└── assets/       # Imágenes (foto de perfil)
 system_prompt.txt  # Instrucciones del modelo (editable)
 ```
 
@@ -44,7 +46,7 @@ npm run lint     # linting
 |---|---|---|
 | Sobre mí | `#inicio` | Foto, título, pitch y descarga del CV |
 | Proyectos | `#proyectos` | Proyectos destacados |
-| Herramientas | `#tecnologias` | Stack y logos |
+| Herramientas | `#tecnologias` | Stack e iconos de cada tecnología |
 | Educación | `#educacion` | Formación académica |
 | Habilidades | `#habilidades-blandas` | Habilidades blandas |
 | Contacto | `#contacto` | Correo (copiar) y redes |
@@ -105,6 +107,7 @@ Variables disponibles:
 - CSS mobile-first (`min-width`) con layouts de 1, 2 y 3 columnas según el ancho.
 - Tema claro/oscuro con `data-theme` y respeto por `prefers-reduced-motion`.
 - Enlaces externos con `rel="noopener noreferrer"` y aviso de nueva pestaña.
+- Los iconos son decorativos (`aria-hidden`) y los controles conservan su `aria-label`.
 
 ## Enlaces
 
